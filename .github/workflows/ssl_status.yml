@@ -1,0 +1,49 @@
+
+name: Node.js CICD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: SSH Remote Commands
+      with:
+        script: |
+          #!/bin/bash
+          
+          domain="example.com"
+          port="443"
+          
+          # Get the certificate's "Not Before" and "Not After" dates
+          dates=$(openssl s_client -connect "$domain:$port" 2>/dev/null | openssl x509 -noout -dates)
+          
+          # Extract "Not Before" and "Not After" dates
+          not_before=$(echo "$dates" | grep "notBefore" | cut -d "=" -f 2)
+          not_after=$(echo "$dates" | grep "notAfter" | cut -d "=" -f 2)
+          
+          # Convert dates to Unix timestamps for comparison
+          not_before_unix=$(date -d "$not_before" +%s)
+          not_after_unix=$(date -d "$not_after" +%s)
+          current_unix=$(date +%s)
+          
+          # Check if the current date is within the validity range
+          if [ "$current_unix" -ge "$not_before_unix" ] && [ "$current_unix" -le "$not_after_unix" ]; then
+              echo "Certificate for $domain is valid."
+          else
+              echo "Certificate for $domain is expired or not yet valid."
+          fi
+
+  
+         
