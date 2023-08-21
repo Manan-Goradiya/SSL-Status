@@ -19,8 +19,8 @@ jobs:
 
     steps:
     - name: SSH Remote Commands
-      with:
-        script: |
+      
+      run: |
           #!/bin/bash
           
           domain="example.com"
