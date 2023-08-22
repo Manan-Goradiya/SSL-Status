@@ -45,5 +45,5 @@ jobs:
 
 
             fi
-            done < "doamin.txt"
+            done < "domain.txt"
             
