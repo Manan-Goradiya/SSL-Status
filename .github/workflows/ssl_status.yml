@@ -21,7 +21,7 @@ jobs:
       
       run: |
             ls
-            cat domain.txt | while IFD=read -r data ; do
+            cat domain.txt | while IFS=read -r data ; do
             port="443"
             echo $data
             dates=$(openssl s_client -connect "$data:$port" 2>/dev/null | openssl x509 -noout -dates)
