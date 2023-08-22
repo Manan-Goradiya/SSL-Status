@@ -20,8 +20,7 @@ jobs:
     - name: SSH Remote Commands
       
       run: |
-            cat domain.txt | while read -r data1 ; do
-            data=$data1
+            cat domain.txt | while read -r data ; do
             port="443"
             echo $data
             dates=$(openssl s_client -connect "$data:$port" 2>/dev/null | openssl x509 -noout -dates)
