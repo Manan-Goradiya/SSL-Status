@@ -37,11 +37,11 @@ jobs:
             # Check if the current date is within the validity range
             if [ "$current_unix" -ge "$not_before_unix" ] && [ "$current_unix" -le "$not_after_unix" ]; then
                 echo "Certificate for $domain is valid."
-                curl -X POST -H 'Content-type: application/json' --data '{"text":"Certificate for $domain is valid."}' $secrets.SLACK_URL
+                curl -X POST -H 'Content-type: application/json' --data '{"text":"Certificate for $domain is valid."}' ${{secrets.SLACK_URL}}
 
             else
                 echo "Certificate for $domain is expired or not yet valid."
-                curl -X POST -H 'Content-type: application/json' --data '{"text":"Certificate for $domain is expired or not yet valid."}' $secrets.SLACK_URL
+                curl -X POST -H 'Content-type: application/json' --data '{"text":"Certificate for $domain is expired or not yet valid."}' ${{secrets.SLACK_URL}}
 
 
             fi
