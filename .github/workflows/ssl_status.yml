@@ -20,6 +20,7 @@ jobs:
     - name: SSH Remote Commands
       
       run: |
+            ls
             cat domain.txt | while read -r data ; do
             port="443"
             echo $data
